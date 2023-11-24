@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import { lusitana } from '@/app/ui/fonts';
 import { fetchLatestInvoices } from '@/app/lib/data'
+import { Card } from '@tremor/react'
 export default async function LatestInvoices() {
     const latestInvoices = await fetchLatestInvoices()
   return (
@@ -10,10 +11,10 @@ export default async function LatestInvoices() {
       <h2 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
         Latest Invoices
       </h2>
-      <div className="flex bg-gradient-to-tr from-[#190040] from-10% via-[#3f48f2] via-30% to-[#0aa9ff] to-90% text-white grow flex-col justify-between rounded-xl bg-gray-50 p-4">
+      <div className="flex bg-opacity-0 border border-opacity-25 backdrop-filter backdrop-blur-[17px] backdrop-saturate-200 text-tremor-background-emphasis dark:text-tremor-background grow flex-col justify-between rounded-xl bg-gray-50 p-4">
         {/* NOTE: comment in this code when you get to this point in the course */}
 
-        <div className="card-glass bg-white px-6">
+        <Card className="card-glass bg-white px-6">
           {latestInvoices.map((invoice, i) => {
             return (
               <div
@@ -50,10 +51,10 @@ export default async function LatestInvoices() {
               </div>
             );
           })}
-        </div>
+        </Card>
         <div className="flex items-center pb-2 pt-6">
-          <ArrowPathIcon className="h-5 w-5 text-gray-400" />
-          <h3 className="ml-2 text-sm text-gray-400 ">Updated just now</h3>
+          <ArrowPathIcon className="h-5 w-5" />
+          <h3 className="ml-2 text-sm">Updated just now</h3>
         </div>
       </div>
     </div>

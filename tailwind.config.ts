@@ -2,6 +2,7 @@ import type { Config } from 'tailwindcss';
 
 // @ts-ignore
 const config: Config = {
+  darkMode: "class",
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -34,6 +35,7 @@ const config: Config = {
             muted: "#f9fafb", // gray-50
             subtle: "#f3f4f6", // gray-100
             DEFAULT: "#ffffff", // white
+            main: "#ffffff", // white
             emphasis: "#374151", // gray-700
           },
           border: {
@@ -64,6 +66,7 @@ const config: Config = {
             muted: "#131A2B", // custom
             subtle: "#1f2937", // gray-800
             DEFAULT: "#111827", // gray-900
+            main: "#111827", // gray-900
             emphasis: "#d1d5db", // gray-300
           },
           border: {

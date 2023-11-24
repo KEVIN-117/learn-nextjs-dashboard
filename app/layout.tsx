@@ -1,6 +1,7 @@
 import '@/app/ui/global.css'
 
 import { inter } from '@/app/ui/fonts'
+import { RouterProvider } from '@/app/context/Routercontext'
 export default function RootLayout({
   children,
 }: {
@@ -8,7 +9,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>{children}</body>
+    <RouterProvider>
+      <body className={`${inter.className} antialiased text-tremor-background-emphasis dark:text-tremor-background`}>{children}</body>
+    </RouterProvider>
     </html>
   );
 }

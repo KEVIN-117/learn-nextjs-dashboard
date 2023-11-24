@@ -34,8 +34,11 @@ export default function NavLinks({setPath}: {setPath: (path: string) => void }) 
               onClick={() => handlePath(link.href)}
             key={link.name}
             href={link.href}
-            className={`flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium 
-            hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3 ${pathname === link.href ? 'bg-sky-100 text-blue-600' : 'border-[.5px] border-slate-950'}`}
+            className={`flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 dark:bg-dark-tremor-background-muted p-3 
+             font-medium md:flex-none md:justify-start md:p-2 md:px-3 text-tremor-default border-[.5px]
+            ${pathname === link.href ? 'tremor-Callout-root bg-teal-500 border-teal-700 text-teal-700 font-bold dark:bg-opacity-10 bg-opacity-10 border-l-4 cursor-none' : 
+                'dark:text-tremor-background-muted tremor-Callout-root rounded-tremor-default text-tremor-default ' +
+                'bg-indigo-500 border-indigo-700 text-indigo-700 dark:bg-opacity-10 bg-opacity-10 border-l-4'}`}
           >
             <LinkIcon className="w-6" />
             <p className="hidden md:block">{link.name}</p>

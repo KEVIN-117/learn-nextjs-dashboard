@@ -12,6 +12,7 @@ const iconMap = {
   pending: ClockIcon,
   invoices: InboxIcon,
 };
+import { Card as CardDesign } from '@tremor/react'
 
 export default async function CardWrapper() {
   const { totalPaidInvoices, totalPendingInvoices, numberOfInvoices, numberOfCustomers } = await fetchCardData()
@@ -35,17 +36,18 @@ export function Card({ title, value, type,}: { title: string; value: number | st
   const Icon = iconMap[type];
 
   return (
-    <div className="rounded-xl bg-gradient-to-tr from-[#190040] from-10% via-[#3f48f2] via-30% to-[#0aa9ff] to-90% text-white p-2 shadow-sm">
+    <div className="rounded-xl bg-opacity-0 border border-opacity-25 backdrop-filter backdrop-blur-[17px] backdrop-saturate-200 text-tremor-background-emphasis dark:text-tremor-background p-2 shadow-sm">
       <div className="flex p-4">
-        {Icon ? <Icon className="h-5 w-5 text-gray-300" /> : null}
+        {Icon ? <Icon className="h-5 w-5" /> : null}
         <h3 className="ml-2 text-sm font-medium">{title}</h3>
       </div>
-      <p
+      <CardDesign
         className={`${lusitana.className}
-          truncate card-glass rounded-xl bg-white px-4 py-8 text-center text-2xl`}
+          truncate rounded-xl bg-white px-4 py-8 text-center text-2xl`}
+        decoration="top" decorationColor="indigo"
       >
         {value}
-      </p>
+      </CardDesign>
     </div>
   );
 }
