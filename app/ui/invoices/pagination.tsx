@@ -5,16 +5,26 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { generatePagination } from '@/app/lib/utils';
 
+import { usePathname, useSearchParams } from 'next/navigation';
+
 export default function Pagination({ totalPages }: { totalPages: number }) {
   // NOTE: comment in this code when you get to this point in the course
 
-  // const allPages = generatePagination(currentPage, totalPages);
 
+    const pathName = usePathname()
+    const searchParams = useSearchParams()
+    const currentPage = Number(searchParams.get('page')) || 1
+    const allPages = generatePagination(currentPage, totalPages);
+    const createPageURL = (page: number | string) => {
+        const params = new URLSearchParams(searchParams)
+        params.set('page', page.toString())
+        return `${pathName}?${params.toString()}`
+    }
   return (
     <>
       {/* NOTE: comment in this code when you get to this point in the course */}
 
-      {/* <div className="inline-flex">
+      <div className="inline-flex">
         <PaginationArrow
           direction="left"
           href={createPageURL(currentPage - 1)}
@@ -47,7 +57,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
           href={createPageURL(currentPage + 1)}
           isDisabled={currentPage >= totalPages}
         />
-      </div> */}
+      </div>
     </>
   );
 }
@@ -69,7 +79,7 @@ function PaginationNumber({
       'rounded-l-md': position === 'first' || position === 'single',
       'rounded-r-md': position === 'last' || position === 'single',
       'z-10 bg-blue-600 border-blue-600 text-white': isActive,
-      'hover:bg-gray-100': !isActive && position !== 'middle',
+      'hover:bg-gray-100 dark:hover:bg-gray-700': !isActive && position !== 'middle',
       'text-gray-300': position === 'middle',
     },
   );
@@ -96,7 +106,7 @@ function PaginationArrow({
     'flex h-10 w-10 items-center justify-center rounded-md border',
     {
       'pointer-events-none text-gray-300': isDisabled,
-      'hover:bg-gray-100': !isDisabled,
+      'hover:bg-gray-100 dark:hover:bg-gray-700': !isDisabled,
       'mr-2 md:mr-4': direction === 'left',
       'ml-2 md:ml-4': direction === 'right',
     },

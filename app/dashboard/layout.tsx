@@ -8,7 +8,7 @@ export default function Layout({children}: {children: ReactNode}){
     return(
         <ThemeProvider>
             <RouterProvider>
-                <div className='flex dark:bg-dark-tremor-background-main bg-tremor-background h-screen flex-col md:flex-row md:overflow-hidden text-tremor-background-emphasis dark:text-tremor-background'>
+                <div className='flex dark:bg-dark-tremor-background-main bg-tremor-background md:h-screen h-auto flex-col md:flex-row md:overflow-hidden text-tremor-background-emphasis dark:text-tremor-background'>
                     <div className='w-full flex-none md:w-64'>
                         <SideNav />
                     </div>

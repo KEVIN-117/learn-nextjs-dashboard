@@ -3,23 +3,18 @@ import { UpdateInvoice, DeleteInvoice } from '@/app/ui/invoices/buttons';
 import InvoiceStatus from '@/app/ui/invoices/status';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredInvoices } from '@/app/lib/data';
+import {Card} from "@tremor/react";
 
-export default async function InvoicesTable({
-  query,
-  currentPage,
-}: {
-  query: string;
-  currentPage: number;
-}) {
+export default async function InvoicesTable({query, currentPage}: { query: string; currentPage: number }) {
   const invoices = await fetchFilteredInvoices(query, currentPage);
 
   return (
-    <div className="mt-6 flow-root">
-      <div className="inline-block min-w-full align-middle">
-        <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
+    <div className="mt-6 flow-root dark:bg-gray-700 ">
+      <div className="inline-block min-w-full align-middle md:p-0 p-2 bg-opacity-0 border border-opacity-25 backdrop-filter backdrop-blur-[17px] backdrop-saturate-200 text-tremor-background-emphasis dark:text-tremor-background">
+        <div className="rounded-lg bg-gray-50 md:pt-0 dark:bg-gray-700">
           <div className="md:hidden">
             {invoices?.map((invoice) => (
-              <div
+              <Card
                 key={invoice.id}
                 className="mb-2 w-full rounded-md bg-white p-4"
               >
@@ -51,11 +46,12 @@ export default async function InvoicesTable({
                     <DeleteInvoice id={invoice.id} />
                   </div>
                 </div>
-              </div>
+              </Card>
             ))}
           </div>
-          <table className="hidden min-w-full text-gray-900 md:table">
-            <thead className="rounded-lg text-left text-sm font-normal">
+          <table className="hidden min-w-full md:table
+          text-tremor-background-emphasis dark:text-tremor-background">
+            <thead className="rounded-lg text-left text-sm font-normal text-gray-700 uppercase bg-dark-tremor-background-emphasis dark:bg-dark-tremor-background-subtle dark:text-gray-400">
               <tr>
                 <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
                   Customer
@@ -77,7 +73,7 @@ export default async function InvoicesTable({
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white">
+            <tbody className="bg-white dark:bg-gray-700">
               {invoices?.map((invoice) => (
                 <tr
                   key={invoice.id}

@@ -23,18 +23,17 @@ export default function SideNav() {
         if (currentTheme === 'light'){
             setTheme('dark')
             setIcon(<Sun/>)
+            localStorage.setItem('theme', 'dark')
         }else {
             setTheme('light')
             setIcon(<Moon/>)
+            localStorage.setItem('theme', 'light')
         }
     }
   return (
-    <Card decoration="right" decorationColor="indigo" className="flex h-full flex-col px-3 py-4 md:px-2">
+    <Card decoration="right" decorationColor="indigo" className="flex gap-2 h-full flex-col px-3 py-4 md:px-2">
 
-      <div
-        className="mb-2 flex flex-col h-20 items-center justify-between rounded-md bg-blue-600  p-4 md:h-40"
-
-      >
+      <div className="mb-2 flex flex-col h-auto items-center justify-between rounded-md bg-blue-600  p-4 md:h-40">
           <button onClick={handleTheme} className="">
               {icon}
           </button>
