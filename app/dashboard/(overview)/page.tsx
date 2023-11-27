@@ -1,4 +1,4 @@
-import RevenueChart from '@/app/ui/dashboard/revenue-chart'
+import RevenueChart, {RevenueAreaChart} from '@/app/ui/dashboard/revenue-chart'
 import LatestInvoices from '@/app/ui/dashboard/latest-invoices'
 import { lusitana } from '@/app/ui/fonts'
 import { fetchRevenue, fetchLatestInvoices } from '@/app/lib/data'
@@ -24,9 +24,14 @@ export default async function Page(){
                     {/**<RevenueChart revenue={revenue}  />**/}
                     <RevenueChart />
                 </Suspense>
+                <Suspense fallback={<RevenueChartSkeleton/>}>
+                    {/**<RevenueChart revenue={revenue}  />**/}
+                    <RevenueAreaChart />
+                </Suspense>
                 <Suspense fallback={<LatestInvoicesSkeleton />}>
                     <LatestInvoices />
                 </Suspense>
+
 
             </div>
         </main>

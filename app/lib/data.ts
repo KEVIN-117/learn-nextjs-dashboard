@@ -7,6 +7,7 @@ import {
   LatestInvoiceRaw,
   User,
   Revenue, Invoice,
+    BreakdownEarningsCustomer
 } from './definitions';
 import { formatCurrency } from './utils';
 import { unstable_noStore as noStore } from 'next/cache'
@@ -220,13 +221,21 @@ export async function fetchFilteredCustomers(query: string) {
   }
 }
 
-export async function getUser(email: string) {
-  noStore()
+export async function fetchBreakdownEarningsCustomer(){
   try {
-    const user = await sql`SELECT * FROM users WHERE email=${email}`;
-    return user.rows[0] as User;
-  } catch (error) {
-    console.error('Failed to fetch user:', error);
-    throw new Error('Failed to fetch user.');
+    const data = await sql<BreakdownEarningsCustomer>`
+    SELECT customers.Name AS CustomersName, SUM(invoices.Amount) AS TotalAmount
+    FROM invoices
+    JOIN customers ON invoices.Customer_id = customers.Id
+    GROUP BY customers.Name;
+    `
+    const customers = data.rows.map((customer) => ({
+      ...customer,
+      TotalAmount: formatCurrency(customer.TotalAmount),
+    }));
+    return customers;
+  }catch (err){
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch customer.');
   }
 }
