@@ -10,7 +10,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <RouterProvider>
-        <body className={`${inter.className} antialiased text-tremor-background-emphasis dark:text-tremor-background-emphasis`}>
+        <body className={`${inter.className} antialiased bg-white dark:bg-dark-tremor-background-main text-tremor-background-emphasis dark:text-tremor-background-emphasis`}>
           {children}
         </body>
       </RouterProvider>

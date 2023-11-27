@@ -1,13 +1,11 @@
-// Loading animation
+// NotFound animation
 import {Card} from "@tremor/react";
 
-const shimmerlight = 'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent';
-const shimmerDark = 'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-slate-700 before:to-transparent';
-const shimmer = `${shimmerlight} dark:${shimmerDark}`;
+const shimmer = '';
 export function CardSkeleton() {
   return (
     <div
-      className={`${shimmer} relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700  p-2 shadow-sm`}
+      className={`${shimmer} animate-ping rounded-xl border border-gray-200 dark:border-gray-700  p-2 shadow-sm`}
     >
       <div className="flex p-4 ">
         <div className="h-5 w-5 rounded-md bg-gray-200 dark:bg-gray-700" />

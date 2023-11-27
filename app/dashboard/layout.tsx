@@ -1,4 +1,4 @@
-import {ReactNode} from 'react'
+import { ReactNode } from 'react'
 import SideNav from '@/app/ui/dashboard/sidenav'
 import { RouterProvider } from '@/app/context/Routercontext'
 import {TopNavigation} from "@/app/ui/dashboard/TopNavigation";
