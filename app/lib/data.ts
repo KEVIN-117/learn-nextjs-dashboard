@@ -12,6 +12,7 @@ import {
 import { formatCurrency } from './utils';
 import { unstable_noStore as noStore } from 'next/cache'
 import * as wasi from "wasi";
+import {da} from "date-fns/locale";
 
 export async function fetchRevenue(): Promise<Revenue[]> {
   // Add noStore() here prevent the response from being cached.
@@ -223,19 +224,43 @@ export async function fetchFilteredCustomers(query: string) {
 
 export async function fetchBreakdownEarningsCustomer(){
   try {
-    const data = await sql<BreakdownEarningsCustomer>`
+    const dataFull = await sql<BreakdownEarningsCustomer>`
     SELECT customers.Name AS CustomersName, SUM(invoices.Amount) AS TotalAmount
     FROM invoices
     JOIN customers ON invoices.Customer_id = customers.Id
     GROUP BY customers.Name;
     `
-    const customers = data.rows.map((customer) => ({
-      ...customer,
-      TotalAmount: formatCurrency(customer.TotalAmount),
-    }));
-    return customers;
+
+    const dataPaid = await sql<BreakdownEarningsCustomer>`
+        SELECT customers.Name AS CustomersName, SUM(invoices.Amount) AS TotalAmount
+        FROM invoices
+        JOIN customers ON invoices.Customer_id = customers.Id
+        WHERE invoices.status = 'paid'
+        GROUP BY customers.Name, invoices.id, customers.id;
+    `
+    const dataPending = await sql<BreakdownEarningsCustomer>`
+        SELECT customers.Name AS CustomersName, SUM(invoices.Amount) AS TotalAmount
+        FROM invoices
+        JOIN customers ON invoices.Customer_id = customers.Id
+        WHERE invoices.status = 'pending'
+        GROUP BY customers.Name, invoices.id, customers.id;
+    `
+    const data = await Promise.all([dataFull, dataPaid, dataPending]);
+
+    return {
+        dataFull: data[0].rows,
+        dataPaid: data[1].rows,
+        dataPending: data[2].rows,
+    }
   }catch (err){
     console.error('Database Error:', err);
     throw new Error('Failed to fetch customer.');
   }
 }
+/*
+SELECT customers.Name AS CustomersName, SUM(invoices.Amount) AS TotalAmount
+FROM invoices
+JOIN customers ON invoices.Customer_id = customers.Id
+WHERE invoices.status = 'paid'
+GROUP BY customers.Name, invoices.id, customers.id;
+ */

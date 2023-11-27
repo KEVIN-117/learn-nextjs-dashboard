@@ -90,6 +90,17 @@ export type InvoiceForm = {
 
 
 export type BreakdownEarningsCustomer = {
-  CustomerName: string;
-  TotalAmount: number;
+  customersname: string;
+  totalamount: string;
+}
+
+
+export interface CombinedCustomerData {
+  name: string;
+  amount: string;
+  totalCurrency: number;
+  amountPaid: string;
+  amountPending: string;
+  paid: number;
+  pending: number;
 }

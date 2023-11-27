@@ -1,5 +1,5 @@
 import { Revenue } from './definitions';
-
+import { BreakdownEarningsCustomer as CustomerData, CombinedCustomerData } from './definitions';
 export const formatCurrency = (amount: number) => {
   return (amount / 100).toLocaleString('en-US', {
     style: 'currency',
@@ -66,4 +66,39 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
     '...',
     totalPages,
   ];
+};
+
+
+export const combineData = (dataFull: CustomerData[], dataPaid: CustomerData[], dataPending: CustomerData[]): CombinedCustomerData[] => {
+  const combinedData: { [key: string]: CombinedCustomerData } = {};
+
+  [dataFull, dataPaid, dataPending].forEach(data => {
+    data.forEach(item => {
+      const { customersname, totalamount } = item;
+      const amountNumber = Number(totalamount);
+      const formattedAmount = formatCurrency(amountNumber);
+
+      if (!combinedData[customersname]) {
+        combinedData[customersname] = {
+          name: customersname,
+          amount: formattedAmount,
+          totalCurrency: amountNumber,
+          amountPaid: '0',
+          amountPending: '0',
+          paid: 0,
+          pending: 0
+        };
+      }
+
+      if (data === dataPaid) {
+        combinedData[customersname].amountPaid = formattedAmount;
+        combinedData[customersname].paid = amountNumber;
+      } else if (data === dataPending) {
+        combinedData[customersname].amountPending = formattedAmount;
+        combinedData[customersname].pending = amountNumber;
+      }
+    });
+  });
+
+  return Object.values(combinedData);
 };
