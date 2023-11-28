@@ -1,10 +1,11 @@
-export function NotFound(){
+export function NotFound({width=1000, height=1000}:{width?: number, height?: number}){
     return(
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 1000 1000"
-            width={1000}
-            height={1000}
+            width={width}
+            height={height}
+
         >
             <title>{"3828535-ai"}</title>
             <style>

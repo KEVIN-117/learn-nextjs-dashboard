@@ -122,6 +122,7 @@ export async function fetchFilteredInvoices(query: string,  currentPage: number)
 }
 
 export async function fetchInvoicesPages(query: string) {
+  console.log(query)
   noStore()
   try {
     const count = await sql`SELECT COUNT(*)
@@ -161,7 +162,7 @@ export async function fetchInvoiceById(id: string) {
       // Convert amount from cents to dollars
       amount: invoice.amount / 100,
     }));
-
+    console.log(invoice[0])
     return invoice[0];
   } catch (error) {
     console.error('Database Error:', error);

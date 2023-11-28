@@ -5,8 +5,9 @@ import {
   DocumentDuplicateIcon,
 } from '@heroicons/react/24/outline';
 import Link from "next/link";
-
+import { RouterContext } from '@/app/context/Routercontext'
 import{ usePathname } from 'next/navigation'
+import { useContext } from 'react'
 
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
@@ -20,8 +21,9 @@ const links = [
   { name: 'Customers', href: '/dashboard/customers', icon: UserGroupIcon },
 ];
 
-export default function NavLinks({setPath}: {setPath: (path: string) => void }) {
+export default function NavLinks() {
   const pathname = usePathname()
+  const {setPath} = useContext(RouterContext)
   const handlePath = (path: string) => {
     setPath(path)
   }

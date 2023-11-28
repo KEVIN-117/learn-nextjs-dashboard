@@ -11,12 +11,12 @@ export default function Search({ placeholder }: { placeholder: string }) {
         const value = e.target.value
         console.log(`Searching... ${value}`);
         const params = new URLSearchParams(searchParams)
-        params.set('page', '1')
         if (value){
             params.set('query', value)
         }else {
             params.delete('query')
         }
+        params.set('page', '1')
         replace(`${pathName}?${params.toString()}`)
     }, 3000)
   return (

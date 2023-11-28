@@ -6,12 +6,16 @@ import {InvoicesTableSkeleton} from "@/app/ui/skeletons";
 import { fetchInvoicesPages } from '@/app/lib/data'
 import Table from "@/app/ui/invoices/table";
 import Pagination from "@/app/ui/invoices/pagination";
+import { Metadata } from 'next'
 
-export default async function Page({searchParams}:{searchParams?: {query?: string, currentPage?: number}}) {
+export const metadata: Metadata ={
+    title: 'Invoices',
+}
+export default async function Page({searchParams}:{searchParams?: {query?: string, page?: number}}) {
     // /*#__PURE__*/React.createElement("p", null, "Invoices Page");
+    console.log(searchParams)
+    const currentPage = Number(searchParams?.page!) || 1
     const query = searchParams?.query || ''
-    const currentPage = Number(searchParams?.currentPage) || 1
-
     const totalPages = await fetchInvoicesPages(query)
     return (
         <div className='w-full'>
