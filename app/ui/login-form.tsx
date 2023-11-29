@@ -61,11 +61,15 @@ export default function LoginForm() {
           </div>
         </div>
         <LoginButton />
-        <div className="flex h-8 items-end space-x-1">
+        <div
+            className="flex h-8 items-end space-x-1"
+            aria-live="polite"
+            aria-atomic="true"
+        >
           {state === 'CredentialsSignin' && (
               <>
-                <ExclamationCircleIcon className="h-5 w- text-red-500" />
-                <p className="text-sm text-red-500">Invalid Credentials</p>
+                <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
+                <p className="text-sm text-red-500">Invalid credentials</p>
               </>
           )}
         </div>

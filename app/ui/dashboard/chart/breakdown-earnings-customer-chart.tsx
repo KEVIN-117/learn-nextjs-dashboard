@@ -7,33 +7,6 @@ import {CalendarIcon} from "@heroicons/react/24/outline";
 export default async function BreakdownEarningsCustomerAreaChart() {
     const { dataPaid, dataPending, dataFull } = await fetchBreakdownEarningsCustomer()
 
-    const fullData = dataFull.map((r) => ({
-        name: r.customersname,
-        amount: formatCurrency(Number(r.totalamount)),
-        totalCurrency: Number(r.totalamount),
-        amountPaid: 0,
-        amountPending: 0,
-        paid: 0,
-        pending: 0
-    }));
-    const paidData = dataPaid.map((r) => ({
-        name: r.customersname,
-        amountPaid: formatCurrency(Number(r.totalamount)),
-        paid: Number(r.totalamount),
-        totalCurrency: 0,
-        amount: 0,
-        amountPending: 0,
-        pending: 0
-    }))
-    const pendingData = dataPending.map((r) => ({
-        name: r.customersname,
-        amountPending: formatCurrency(Number(r.totalamount)),
-        pending: Number(r.totalamount),
-        totalCurrency: 0,
-        amount: 0,
-        amountPaid: 0,
-        paid: 0
-    }))
 
     const data = combineData(dataFull, dataPaid, dataPending);
 

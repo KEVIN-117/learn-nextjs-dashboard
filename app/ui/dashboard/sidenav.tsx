@@ -4,7 +4,6 @@ import AcmeLogo from '@/app/ui/acme-logo';
 import { PowerIcon } from '@heroicons/react/24/outline';
 import { Card } from "@tremor/react";
 import { signOut } from '@/auth'
-import { redirect } from "next/navigation";
 import {ThemeHandler} from "@/app/ui/button";
 
 export default function SideNav() {
@@ -25,7 +24,6 @@ export default function SideNav() {
                     <form action={async ()=>{
                         'use server'
                         await signOut()
-                        redirect('/')
                     }}>
                         <button className="flex h-[48px] justify-center items-center w-full grow gap-2 font-medium md:flex-none md:justify-start md:p-2 md:px-3
                             tremor-Callout-root rounded-tremor-default text-tremor-default bg-red-700 border-red-700

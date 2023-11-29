@@ -1,10 +1,10 @@
 "use client";
 import clsx from 'clsx';
-import {useContext} from "react";
+import {useContext, ReactNode, ButtonHTMLAttributes} from "react";
 import {ThemeContext} from "@/app/context/ThemeProvider";
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode;
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children: ReactNode;
 }
 
 export function Button({ children, className, ...rest }: ButtonProps) {

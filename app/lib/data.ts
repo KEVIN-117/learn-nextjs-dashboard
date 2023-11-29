@@ -1,18 +1,15 @@
 import {QueryResult, sql} from '@vercel/postgres';
 import {
+  BreakdownEarningsCustomer,
   CustomerField,
   CustomersTable,
   InvoiceForm,
   InvoicesTable,
   LatestInvoiceRaw,
-  User,
-  Revenue, Invoice,
-    BreakdownEarningsCustomer
+  Revenue
 } from './definitions';
-import { formatCurrency } from './utils';
-import { unstable_noStore as noStore } from 'next/cache'
-import * as wasi from "wasi";
-import {da} from "date-fns/locale";
+import {formatCurrency} from './utils';
+import {unstable_noStore as noStore} from 'next/cache'
 
 export async function fetchRevenue(): Promise<Revenue[]> {
   // Add noStore() here prevent the response from being cached.
@@ -25,7 +22,6 @@ export async function fetchRevenue(): Promise<Revenue[]> {
 
     return data.rows;
   } catch (error) {
-    console.error('Database Error:', error);
     throw new Error('Failed to fetch revenue data.');
   }
 }
@@ -46,7 +42,6 @@ export async function fetchLatestInvoices() {
     }));
     return latestInvoices;
   } catch (error) {
-    console.error('Database Error:', error);
     throw new Error('Failed to fetch the latest invoices.');
   }
 }
@@ -82,7 +77,6 @@ export async function fetchCardData() {
       totalPendingInvoices,
     };
   } catch (error) {
-    console.error('Database Error:', error);
     throw new Error('Failed to fetch card data.');
   }
 }
@@ -116,13 +110,11 @@ export async function fetchFilteredInvoices(query: string,  currentPage: number)
 
     return invoices.rows;
   } catch (error) {
-    console.error('Database Error:', error);
     throw new Error('Failed to fetch invoices.');
   }
 }
 
 export async function fetchInvoicesPages(query: string) {
-  console.log(query)
   noStore()
   try {
     const count = await sql`SELECT COUNT(*)
@@ -139,7 +131,6 @@ export async function fetchInvoicesPages(query: string) {
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
     return totalPages;
   } catch (error) {
-    console.error('Database Error:', error);
     throw new Error('Failed to fetch total number of invoices.');
   }
 }
@@ -162,10 +153,8 @@ export async function fetchInvoiceById(id: string) {
       // Convert amount from cents to dollars
       amount: invoice.amount / 100,
     }));
-    console.log(invoice[0])
     return invoice[0];
   } catch (error) {
-    console.error('Database Error:', error);
     throw new Error('Failed to fetch invoice.');
   }
 }
@@ -181,10 +170,8 @@ export async function fetchCustomers() {
       ORDER BY name ASC
     `;
 
-    const customers = data.rows;
-    return customers;
+    return data.rows;
   } catch (err) {
-    console.error('Database Error:', err);
     throw new Error('Failed to fetch all customers.');
   }
 }
@@ -210,15 +197,12 @@ export async function fetchFilteredCustomers(query: string) {
 		ORDER BY customers.name ASC
 	  `;
 
-    const customers = data.rows.map((customer) => ({
+    return data.rows.map((customer) => ({
       ...customer,
       total_pending: formatCurrency(customer.total_pending),
       total_paid: formatCurrency(customer.total_paid),
     }));
-
-    return customers;
   } catch (err) {
-    console.error('Database Error:', err);
     throw new Error('Failed to fetch customer table.');
   }
 }
@@ -254,7 +238,6 @@ export async function fetchBreakdownEarningsCustomer(){
         dataPending: data[2].rows,
     }
   }catch (err){
-    console.error('Database Error:', err);
     throw new Error('Failed to fetch customer.');
   }
 }
