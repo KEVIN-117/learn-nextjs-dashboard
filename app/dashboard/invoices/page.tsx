@@ -13,7 +13,6 @@ export const metadata: Metadata ={
 }
 export default async function Page({searchParams}:{searchParams?: {query?: string, page?: number}}) {
     // /*#__PURE__*/React.createElement("p", null, "Invoices Page");
-    console.log(searchParams)
     const currentPage = Number(searchParams?.page!) || 1
     const query = searchParams?.query || ''
     const totalPages = await fetchInvoicesPages(query)

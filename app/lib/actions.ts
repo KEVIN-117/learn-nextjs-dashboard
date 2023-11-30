@@ -4,7 +4,7 @@ import { sql } from '@vercel/postgres'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { State } from './definitions'
-import { signIn } from '@/auth'
+//import { signIn } from '@/auth.example'
 
 const InvoiceSchema = z.object({
     id: z.string(),
@@ -90,7 +90,7 @@ export async function deleteInvoice(id: string){
     redirect('/dashboard/invoices')
 }
 
-export async function authenticate(
+{/*export async function authenticate(
     prevState: string | undefined,
     formData: FormData,
 ) {
@@ -102,4 +102,4 @@ export async function authenticate(
         }
         throw error;
     }
-}
+}*/}

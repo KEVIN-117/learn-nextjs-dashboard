@@ -114,6 +114,30 @@ export async function fetchFilteredInvoices(query: string,  currentPage: number)
   }
 }
 
+export async function fetchFilteredCustomer(query: string,  currentPage: number) {
+  noStore()
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  try {
+    const invoices = await sql<InvoicesTable>`
+      SELECT
+        customers.id,
+        customers.name,
+        customers.email,
+        customers.image_url
+      FROM invoices
+      WHERE
+        customers.name ILIKE ${`%${query}%`} OR
+        customers.email ILIKE ${`%${query}%`}
+      ORDER BY customers.name DESC
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+    `;
+
+    return invoices.rows;
+  } catch (error) {
+    throw new Error('Failed to fetch invoices.');
+  }
+}
 export async function fetchInvoicesPages(query: string) {
   noStore()
   try {
@@ -130,6 +154,22 @@ export async function fetchInvoicesPages(query: string) {
 
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
     return totalPages;
+  } catch (error) {
+    throw new Error('Failed to fetch total number of invoices.');
+  }
+}
+
+export async function fetchCustomerPages(query: string) {
+  noStore()
+  try {
+    const count = await sql`SELECT COUNT(*)
+    FROM customers
+    WHERE
+      customers.name ILIKE ${`%${query}%`} OR
+      customers.email ILIKE ${`%${query}%`}
+  `;
+
+    return Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
   } catch (error) {
     throw new Error('Failed to fetch total number of invoices.');
   }
@@ -176,8 +216,9 @@ export async function fetchCustomers() {
   }
 }
 
-export async function fetchFilteredCustomers(query: string) {
+export async function fetchFilteredCustomers(query: string, currentPage: number) {
   noStore()
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
   try {
     const data = await sql<CustomersTable>`
 		SELECT
@@ -192,9 +233,10 @@ export async function fetchFilteredCustomers(query: string) {
 		LEFT JOIN invoices ON customers.id = invoices.customer_id
 		WHERE
 		  customers.name ILIKE ${`%${query}%`} OR
-        customers.email ILIKE ${`%${query}%`}
+          customers.email ILIKE ${`%${query}%`}
 		GROUP BY customers.id, customers.name, customers.email, customers.image_url
 		ORDER BY customers.name ASC
+		LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
 	  `;
 
     return data.rows.map((customer) => ({

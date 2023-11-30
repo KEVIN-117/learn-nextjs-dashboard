@@ -3,7 +3,7 @@ import NavLinks from '@/app/ui/dashboard/nav-links';
 import AcmeLogo from '@/app/ui/acme-logo';
 import { PowerIcon } from '@heroicons/react/24/outline';
 import { Card } from "@tremor/react";
-import { signOut } from '@/auth'
+import { signOut } from '@/auth.example'
 import {ThemeHandler} from "@/app/ui/button";
 
 export default function SideNav() {
