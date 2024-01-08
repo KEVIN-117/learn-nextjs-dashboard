@@ -1,6 +1,6 @@
 import {QueryResult, sql} from '@vercel/postgres';
 import {
-  BreakdownEarningsCustomer,
+  BreakdownEarningsCustomer, Customer,
   CustomerField,
   CustomersTable,
   InvoiceForm,
@@ -290,3 +290,20 @@ JOIN customers ON invoices.Customer_id = customers.Id
 WHERE invoices.status = 'paid'
 GROUP BY customers.Name, invoices.id, customers.id;
  */
+
+export async function fetchCustomersData(){
+  noStore()
+  try {
+    const data = await sql<Customer>`
+    SELECT
+      *
+    FROM customers
+    ORDER BY name ASC
+  `;
+
+    return data.rows;
+  } catch (err) {
+    throw new Error('Failed to fetch all customers.');
+  }
+
+}

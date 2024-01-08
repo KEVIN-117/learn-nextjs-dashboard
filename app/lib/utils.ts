@@ -102,3 +102,7 @@ export const combineData = (dataFull: CustomerData[], dataPaid: CustomerData[], 
 
   return Object.values(combinedData);
 };
+
+export const imageUploader = () => {
+  
+}

@@ -3,6 +3,7 @@ import {
   UserGroupIcon,
   HomeIcon,
   DocumentDuplicateIcon,
+    InformationCircleIcon
 } from '@heroicons/react/24/outline';
 import Link from "next/link";
 import { RouterContext } from '@/app/context/Routercontext'
@@ -19,6 +20,7 @@ const links = [
     icon: DocumentDuplicateIcon,
   },
   { name: 'Customers', href: '/dashboard/customers', icon: UserGroupIcon },
+  { name: 'Information', href: '/dashboard/information', icon: InformationCircleIcon },
 ];
 
 export default function NavLinks() {

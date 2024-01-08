@@ -9,19 +9,21 @@ import { Button } from '@/app/ui/button';
 import {Card} from "@tremor/react";
 import { createInvoice } from '@/app/lib/actions'
 import { useFormState } from 'react-dom'
-import { useRef } from 'react'
+import { useState, ChangeEvent } from 'react'
 
 export default function Form() {
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createInvoice, initialState);
-  const fileInputRef = useRef<HTMLInputElement>(null)
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    console.log(e.target.value);
+  const [imgUrl, setImgUrl] = useState<string>('')
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const element = e.target as HTMLInputElement
+    console.log(element.files![0])
+    const url = URL.createObjectURL(element.files![0])
+    setImgUrl(url)
   }
   return (
     <form >
-      <Card className="rounded-md bg-gray-50 p-4 md:p-6">
+      <Card className="rounded-md flex flex-col md:h-[70vh] h-auto bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
           <label htmlFor="amount" className="mb-2 block text-sm font-medium">
@@ -77,12 +79,18 @@ export default function Form() {
         </div>
 
         {/* Invoice Status */}
-        <div className="mb-4">
-          <label htmlFor="image" className="flex flex-col items-center justify-center md:w-[500px] rounded-full md:h-[500px] border-2 border-gray-300 border-dashed cursor-pointer bg-gray-50
-          dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-            <CameraIcon className="pointer-events-none left-3  md:w-32 h-32  text-gray-500 peer-focus:text-gray-900" />
+        <div className="mb-4 flex-1">
+          <label htmlFor="image" className="flex items-center md:h-full h-48 rounded-full  mx-auto justify-center border-2 border-gray-300 border-dashed cursor-pointer bg-gray-50
+          dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+            style={{
+              backgroundImage: `url(${imgUrl})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
+            }}
+          >
+            {!imgUrl && (<CameraIcon className="pointer-events-none left-3  md:w-32 h-32  text-gray-500 peer-focus:text-gray-900" />)}
             <input
-                ref={fileInputRef}
                 onChange={handleChange}
                 id="image"
                 name="amount"
@@ -91,7 +99,6 @@ export default function Form() {
                 className="hidden"
             />
           </label>
-
           <div id="amount-currency-error">
             {state.errors?.amount &&
                 state.errors?.amount.map((error) => (
