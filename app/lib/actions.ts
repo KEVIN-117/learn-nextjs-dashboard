@@ -3,8 +3,10 @@ import {undefined, z} from 'zod'
 import { sql } from '@vercel/postgres'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { State } from './definitions'
-//import { signIn } from '@/auth.example'
+import {CustomerState, State} from './definitions'
+
+
+import { signIn } from '@/auth'
 
 const InvoiceSchema = z.object({
     id: z.string(),
@@ -44,7 +46,6 @@ export async function createInvoice(prevState:State, formData: FormData){
 
     }catch (e: any) {
         return {error: e instanceof z.ZodError ? e.issues : [{ path: ['unknown'], message: e.message }]}
-
     }
     revalidatePath('/dashboard/invoices')
     redirect('/dashboard/invoices')
@@ -90,7 +91,7 @@ export async function deleteInvoice(id: string){
     redirect('/dashboard/invoices')
 }
 
-{/*export async function authenticate(
+export async function authenticate(
     prevState: string | undefined,
     formData: FormData,
 ) {
@@ -102,4 +103,64 @@ export async function deleteInvoice(id: string){
         }
         throw error;
     }
-}*/}
+}
+
+
+const CustomerSchema = z.object({
+    id: z.string(),
+    name: z.string({
+        invalid_type_error: 'Please enter a name',
+    }),
+    email: z.string({
+        invalid_type_error: 'Please enter an email',
+    }),
+    image: z.string({
+        invalid_type_error: 'Please enter an image file',
+    })
+})
+
+const CreateCustomerSchema = CustomerSchema.omit({ id: true })
+
+export async function createCustomer(prevState:CustomerState, formData: FormData){
+    console.log("create customer")
+    console.log(formData.get('name'))
+    console.log(formData.get('email'))
+    console.log(formData.get('image'))
+    const validateFields = CreateCustomerSchema.safeParse({
+        name: formData.get('name'),
+        email: formData.get('email'),
+        image: formData.get('image')
+    })
+    if (!validateFields.success){
+        return {
+            errors: validateFields.error.flatten().fieldErrors,
+            message: 'Missing Fields. Failed to create invoice.',
+        }
+    }
+    const { name, email, image } = validateFields.data
+    //const image_url = await uploader(image).then((data: any) => data.url)
+    try {
+        /*await sql`
+            INSERT INTO customers (name, email, image_url)
+            VALUES (${name}, ${email}, ${image_url})
+        `*/
+        console.log(name, email, image)
+
+    }catch (e: any) {
+        return {error: e instanceof z.ZodError ? e.issues : [{ path: ['unknown'], message: e.message }]}
+    }
+    revalidatePath('/dashboard/customers')
+    redirect('/dashboard/customers')
+}
+
+const uploader = async (file: any)=>{
+    const formData = new FormData()
+    formData.append('image', file)
+    const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+    })
+    const data = await response.json()
+    console.log("data image upload " + data.url)
+    formData.append('image', data.url)
+}

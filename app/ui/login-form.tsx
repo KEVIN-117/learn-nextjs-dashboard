@@ -8,13 +8,13 @@ import {
 import { ArrowRightIcon, HomeIcon } from '@heroicons/react/20/solid';
 import { Button } from './button';
 import { useFormState, useFormStatus } from 'react-dom'
-// import { authenticate } from '@/app/lib/actions'
+import { authenticate } from '@/app/lib/actions'
 import Link from "next/link";
 
 export default function LoginForm() {
-  //const [state, dispatch] = useFormState(authenticate, undefined)
+  const [state, dispatch] = useFormState(authenticate, undefined)
   return (
-    <form  className="space-y-3 dark:text-white">
+    <form  className="space-y-3 dark:text-white" action={dispatch}>
       <div className="glass flex-1 rounded-lg px-6 pb-4 pt-8">
         <h1 className={`${lusitana.className} mb-3 text-2xl`}>
           Please log in to continue.
@@ -60,8 +60,13 @@ export default function LoginForm() {
             </div>
           </div>
         </div>
-        <LoginButton />
-        {/*<div
+        <Button type="submit" className="mt-4 w-full" >
+          Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
+        </Button>
+        <Link href='/' className="mt-4 w-full flex h-10 items-center rounded-lg bg-blue-500 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50">
+          Back to home <HomeIcon className="ml-auto h-5 w-5 text-gray-50" />
+        </Link>
+        <div
             className="flex h-8 items-end space-x-1"
             aria-live="polite"
             aria-atomic="true"
@@ -72,22 +77,9 @@ export default function LoginForm() {
                 <p className="text-sm text-red-500">Invalid credentials</p>
               </>
           )}
-        </div>*/}
+        </div>
       </div>
     </form>
   );
 }
 
-function LoginButton() {
-  const { pending } = useFormStatus()
-  return (
-    <>
-      <Button className="mt-4 w-full" aria-disabled={pending}>
-        Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
-      </Button>
-      <Link href='/' className="mt-4 w-full flex h-10 items-center rounded-lg bg-blue-500 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50" aria-disabled={pending}>
-        Back to home <HomeIcon className="ml-auto h-5 w-5 text-gray-50" />
-      </Link>
-    </>
-  );
-}

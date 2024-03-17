@@ -6,34 +6,44 @@ import {
     CogIcon
 } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
-import {Card} from "@tremor/react";
-import { createInvoice } from '@/app/lib/actions'
+import { Card } from "@tremor/react";
+import { createCustomer } from '@/app/lib/actions'
 import { useFormState } from 'react-dom'
 import { useState, ChangeEvent } from 'react'
 
 export default function Form() {
   const initialState = { message: null, errors: {} };
-  const [state, dispatch] = useFormState(createInvoice, initialState);
-  const [imgUrl, setImgUrl] = useState<string>('')
+  const [state, dispatch] = useFormState(createCustomer, initialState);
+  const [image, setImage] = useState<any>(null)
+  const [file, setFile] = useState<any>(null)
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const element = e.target as HTMLInputElement
     console.log(element.files![0])
-    const url = URL.createObjectURL(element.files![0])
-    setImgUrl(url)
+    const image = element.files![0]
+    setFile(image)
   }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('name', e.currentTarget.name)
+    formData.append('email', e.currentTarget.email.value)
+    formData.append('image', file)
+    await dispatch;
+  };
   return (
-    <form >
-      <Card className="rounded-md flex flex-col md:h-[70vh] h-auto bg-gray-50 p-4 md:p-6">
+    <form onSubmit={handleSubmit}>
+      <Card className="rounded-md flex flex-col md:h-screen h-auto bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
-          <label htmlFor="amount" className="mb-2 block text-sm font-medium">
+          <label htmlFor="name" className="mb-2 block text-sm font-medium">
             Your Name
           </label>
           <div className="relative mt-2 rounded-md">
             <div className="relative">
               <input
-                  id="amount"
-                  name="amount"
+                  id="name"
+                  name="name"
                   type="text"
                   placeholder="alguien"
                   aria-describedby="amount-currency-error"
@@ -43,8 +53,8 @@ export default function Form() {
             </div>
           </div>
           <div id='customer-error' aria-live='polite' aria-atomic='true'>
-            {state.errors?.customerId &&
-            state.errors?.customerId.map((error)=> (
+            {state.errors?.name &&
+            state.errors?.name.map((error)=> (
                 <p key={error} className='mt-2 text-sm text-red-500'>
                   {error}
                 </p>
@@ -52,16 +62,16 @@ export default function Form() {
           </div>
         </div>
 
-        {/* Invoice Amount */}
+        {/* Customer Email */}
         <div className="mb-4">
-          <label htmlFor="amount" className="mb-2 block text-sm font-medium">
+          <label htmlFor="email" className="mb-2 block text-sm font-medium">
             Your email
           </label>
           <div className="relative mt-2 rounded-md">
             <div className="relative">
               <input
-                id="amount"
-                name="amount"
+                id="email"
+                name="email"
                 type="email"
                 placeholder="alguien@gmail.com"
                 aria-describedby="amount-currency-error"
@@ -71,37 +81,38 @@ export default function Form() {
             </div>
           </div>
           <div id="amount-currency-error">
-            {state.errors?.amount &&
-            state.errors?.amount.map((error) => (
+            {state.errors?.email &&
+            state.errors?.email.map((error) => (
                 <p key={error} className='mt-2 text-sm text-red-500'>{error}</p>
             ))}
           </div>
         </div>
 
-        {/* Invoice Status */}
-        <div className="mb-4 flex-1">
-          <label htmlFor="image" className="flex items-center md:h-full h-48 rounded-full  mx-auto justify-center border-2 border-gray-300 border-dashed cursor-pointer bg-gray-50
+        {/* Customer Image */}
+        <div className="mb-4 w-[50%] h-screen mx-auto">
+          <label htmlFor="image" className="flex items-center md:h-full h-48 rounded-md  mx-auto justify-center border-2 border-gray-300 border-dashed
+          cursor-pointer bg-gray-50
           dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
             style={{
-              backgroundImage: `url(${imgUrl})`,
+              backgroundImage: `url(${file ? URL.createObjectURL(file) : ''})`,
               backgroundSize: 'cover',
-              backgroundPosition: 'center',
+              backgroundPosition: 'top',
               backgroundRepeat: 'no-repeat'
             }}
           >
-            {!imgUrl && (<CameraIcon className="pointer-events-none left-3  md:w-32 h-32  text-gray-500 peer-focus:text-gray-900" />)}
+            {!file && (<CameraIcon className="pointer-events-none left-3  md:w-32 h-32  text-gray-500 peer-focus:text-gray-900" />)}
             <input
                 onChange={handleChange}
                 id="image"
-                name="amount"
+                name="image"
                 type="file"
                 aria-describedby="amount-currency-error"
                 className="hidden"
             />
           </label>
           <div id="amount-currency-error">
-            {state.errors?.amount &&
-                state.errors?.amount.map((error) => (
+            {state.errors?.image &&
+                state.errors?.image.map((error) => (
                     <p key={error} className='mt-2 text-sm text-red-500'>{error}</p>
                 ))}
           </div>

@@ -4,6 +4,7 @@ import Search from '@/app/ui/search';
 import { FormattedCustomersTable } from '@/app/lib/definitions';
 import { fetchFilteredCustomers} from "@/app/lib/data";
 import {Card} from "@tremor/react";
+import myImageLoader from "@/scripts/Loader";
 
 export default async function CustomersTable({query, currentPage}:{query:string, currentPage:number}) {
   const customers = await  fetchFilteredCustomers(query, currentPage);
@@ -85,10 +86,11 @@ export default async function CustomersTable({query, currentPage}:{query:string,
                         <div className="flex items-center gap-3">
                           <Image
                             src={customer.image_url}
-                            className="rounded-full"
+                            className="rounded-full flex justify-center items-center"
                             alt={`${customer.name}'s profile picture`}
                             width={28}
                             height={28}
+                            loader={myImageLoader}
                           />
                           <p>{customer.name}</p>
                         </div>

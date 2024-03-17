@@ -4,6 +4,7 @@ import InvoiceStatus from '@/app/ui/invoices/status';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredInvoices } from '@/app/lib/data';
 import {Card} from "@tremor/react";
+import myImageLoader from "@/scripts/Loader";
 
 export default async function InvoicesTable({query, currentPage}: { query: string; currentPage: number }) {
   const invoices = await fetchFilteredInvoices(query, currentPage);
@@ -24,8 +25,8 @@ export default async function InvoicesTable({query, currentPage}: { query: strin
                       <Image
                         src={invoice.image_url}
                         className="mr-2 rounded-full"
-                        width={28}
-                        height={28}
+                        width={80}
+                        height={80}
                         alt={`${invoice.name}'s profile picture`}
                       />
                       <p>{invoice.name}</p>
@@ -84,9 +85,10 @@ export default async function InvoicesTable({query, currentPage}: { query: strin
                       <Image
                         src={invoice.image_url}
                         alt={`${invoice.name}'s profile picture`}
-                        className="rounded-full"
-                        width={28}
-                        height={28}
+                        className="rounded-full flex justify-center items-center"
+                        width={50}
+                        height={50}
+                        loader={myImageLoader}
                       />
                       <p>{invoice.name}</p>
                     </div>
