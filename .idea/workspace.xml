@@ -5,11 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="08ed394d-301d-488d-86df-acf24f131833" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/copilot/chatSessions/00000000000.xd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/copilot/chatSessions/blobs/version" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/copilot/chatSessions/xd.lck" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/customers/delba-de-oliveira.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/ui/dashboard/cards.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/ui/dashboard/cards.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/upload/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/upload/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/lib/actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/lib/actions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ui/button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/ui/button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ui/customers/create-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/ui/customers/create-form.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ui/invoices/buttons.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/ui/invoices/buttons.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ui/invoices/table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/ui/invoices/table.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ui/search.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/ui/search.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,18 +23,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "KEVIN-117"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;KEVIN-117&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/KEVIN-117/learn-nextjs-dashboard.git",
-    "accountId": "17ea61be-337c-47d8-880f-6df01633a692"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/KEVIN-117/learn-nextjs-dashboard.git&quot;,
+    &quot;accountId&quot;: &quot;17ea61be-337c-47d8-880f-6df01633a692&quot;
   }
-}]]></component>
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -48,14 +52,21 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/MSI/profile/programing/nextJs/learn-nextjs-dashboard/public/customers",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "yarn",
+    "settings.editor.selected.configurable": "terminal",
     "ts.external.directory.path": "C:\\Users\\MSI\\profile\\programing\\nextJs\\learn-nextjs-dashboard\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\MSI\profile\programing\nextJs\learn-nextjs-dashboard\public\customers" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -76,6 +87,8 @@
       <workItem from="1710966960323" duration="1985000" />
       <workItem from="1713831243188" duration="388000" />
       <workItem from="1719515430893" duration="1077000" />
+      <workItem from="1719520559263" duration="900000" />
+      <workItem from="1719947750144" duration="6433000" />
     </task>
     <servers />
   </component>

@@ -3,6 +3,7 @@ import { ChangeEvent } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation'
 import { useDebouncedCallback  } from 'use-debounce'
+import {TextInput} from "@tremor/react";
 export default function Search({ placeholder }: { placeholder: string }) {
     const  searchParams = useSearchParams()
     const pathName = usePathname()
@@ -23,8 +24,8 @@ export default function Search({ placeholder }: { placeholder: string }) {
       <label htmlFor="search" className="sr-only">
         Search
       </label>
-      <input
-        className="peer block w-full rounded-md border border-gray-200 dark:bg-gray-700 outline-0 py-[9px] pl-10 text-sm placeholder:text-gray-500"
+      <TextInput
+        className="peer block w-full rounded-md border border-gray-200 outline-0 py-[9px] pl-10 text-sm placeholder:text-gray-500"
         placeholder={placeholder}
         onChange={handleSearch}
         defaultValue={searchParams.get('query')?.toString()}

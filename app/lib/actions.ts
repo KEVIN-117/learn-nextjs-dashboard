@@ -114,12 +114,13 @@ const CustomerSchema = z.object({
     email: z.string({
         invalid_type_error: 'Please enter an email',
     }),
+    // image field vlidate type File
     image: z.string({
-        invalid_type_error: 'Please enter an image file',
+        invalid_type_error: 'Please upload an image',
     })
 })
 
-const CreateCustomerSchema = CustomerSchema.omit({ id: true })
+const CreateCustomerSchema = CustomerSchema.omit({ id: true, image: true })
 
 export async function createCustomer(prevState:CustomerState, formData: FormData){
     console.log("create customer")
@@ -129,7 +130,6 @@ export async function createCustomer(prevState:CustomerState, formData: FormData
     const validateFields = CreateCustomerSchema.safeParse({
         name: formData.get('name'),
         email: formData.get('email'),
-        image: formData.get('image')
     })
     if (!validateFields.success){
         return {
@@ -137,13 +137,14 @@ export async function createCustomer(prevState:CustomerState, formData: FormData
             message: 'Missing Fields. Failed to create invoice.',
         }
     }
-    const { name, email, image } = validateFields.data
-    //const image_url = await uploader(image).then((data: any) => data.url)
+    const { name, email } = validateFields.data
+    const image = formData.get('image')
+    const {url} = await uploader(image)
     try {
-        /*await sql`
+        await sql`
             INSERT INTO customers (name, email, image_url)
-            VALUES (${name}, ${email}, ${image_url})
-        `*/
+            VALUES (${name}, ${email}, ${url})
+        `
         console.log(name, email, image)
 
     }catch (e: any) {
@@ -156,11 +157,9 @@ export async function createCustomer(prevState:CustomerState, formData: FormData
 const uploader = async (file: any)=>{
     const formData = new FormData()
     formData.append('image', file)
-    const response = await fetch('/api/upload', {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/upload`, {
         method: 'POST',
         body: formData
     })
-    const data = await response.json()
-    console.log("data image upload " + data.url)
-    formData.append('image', data.url)
+    return await response.json()
 }
